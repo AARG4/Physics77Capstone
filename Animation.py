@@ -18,8 +18,9 @@ class Animation(turtle.Turtle):
     def draw(self):
         print("Draw")
         for body in self.bodies:
-            
-            self.dot(body.display_size)
+            self.setx(body.position[0])
+            self.sety(body.position[1])
+            self.dot(body.display_size, "yellow")
 
     def add_body(self, body):
         self.bodies.append(body)

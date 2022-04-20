@@ -7,12 +7,14 @@ if __name__ == "__main__":
     
     print("Hewo world")
 
-#    system = cb.CelestialBodies()
-    s = cb.Sun(mass=1230000000, radius=100)
-    p = cb.Planet(mass=10, radius=20, position=(10,10,10))
-    p2 = cb.Planet(mass=23, radius=50, position=(15,-1,-19))
+    system = cb.CelestialBodies()
+    s = cb.Sun(mass=1230000000, radius=30)
+    p = cb.Planet(mass=10, radius=15, position=(10,10,10))
+    p2 = cb.Planet(mass=23, radius=20, position=(15,-1,-19))
+    a1 = cb.Asteroids(mass=1, radius=2, position=(-15,7,0))
+    c1 = cb.Comet(mass=2, radius=4, position=(-15,-30,0))
 
-    s.draw()
+
 '''
     init_params = np.array([r1, v1])
     init_params = init_params.flatten()

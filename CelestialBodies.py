@@ -56,6 +56,23 @@ class CelestialBodies:
     def __str__(self) -> str:
         return self.name
 
+    def OrbitEquation(w, t, m1, m2): # w is an array containing positions and velocities
+        r1 = w[:2]
+        v1 = w[2:4]
+        
+        r12 = np.linalg.norm(r1)
+        
+        dv1bydt = m2*(-r1)/r12**3  # derivative of velocity
+
+        dr1bydt = v1 # derivative of position 
+        
+        r_derivs = dr1bydt
+        v_derivs = dv1bydt
+        derivs = np.concatenate((r_derivs, v_derivs)) # joining the two arrays
+        
+        return derivs
+
+
 
 
 ## Sun Class: Child of CelestialBodies Class
@@ -71,8 +88,6 @@ class Sun(CelestialBodies):
 
     def __str__(self) -> str:
         return self.name
-
-
 
 ## Planet Class: Child of CelestialBodies Class
 class Planet(CelestialBodies):
@@ -91,8 +106,6 @@ class Planet(CelestialBodies):
     def __str__(self) -> str:
         return self.name
 
-
-
 ## Asteroid Class: Child of CelestialBodies Class
 class Asteroids(CelestialBodies):
 
@@ -105,3 +118,18 @@ class Asteroids(CelestialBodies):
     def __str__(self) -> str:
         return self.name
 
+class Comet(CelestialBodies):
+    
+    def __init__(self,ice_content = 0, mass = 0, radius = 0, velocity = (0,0,0), position = (0,0,0), name = "Comet"):
+        self.name = name
+        self.ice_content = ice_content
+
+        super().__init__(mass, radius, velocity, position, name)
+        super().all_bodies.append(self)
+
+    def change_mass(self):
+        self.mass -= self.delta_mass
+
+    @property
+    def delta_mass(self):
+        pass

@@ -1,11 +1,14 @@
 import numpy as np
 import scipy.constants as sp
+import Animation
+import math
 
 class CelestialBodies:
     
-    all_bodies = []
+    a = Animation.Animation(1000, 1000)
+    all_bodies = a.bodies
 
-    def __init__(self, mass=0, radius=0, velocity=(0,0,0), position=(0,0,0), name="System"):
+    def __init__(self, mass=1, radius=0, velocity=(0,0,0), position=(0,0,0), name="System"):
         assert type(velocity) == tuple and len(velocity) == 3
         assert type(position) == tuple and len(position) == 3
 
@@ -14,6 +17,10 @@ class CelestialBodies:
         self.radius = radius
         self.velocity = velocity
         self.position = position
+        self.display_size = max(
+            math.log(self.mass, self.a.display_log_base),
+            self.a.min_display_size,
+        )
 
     @property
     def total_force(self) -> tuple:
@@ -27,7 +34,6 @@ class CelestialBodies:
 
         return tuple(total)
 
-
     def force_on(self, other) -> tuple:
         '''Calculate the force on self from other. Return a three dimentional tuple representing a force vector'''
 
@@ -39,12 +45,13 @@ class CelestialBodies:
         force_list = [force_list[i] * (other_pos[i]-self.position[i]) for i in range(3)]    
         return tuple(force_list)
 
-
     def distance(self, other):
         deltas = [(s-o)**2 for s, o in zip(self.position, other.position)]
 
         return np.sqrt(np.sum(deltas))
 
+    def draw(self):
+        self.a.draw()
 
     def __str__(self) -> str:
         return self.name

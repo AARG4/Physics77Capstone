@@ -4,7 +4,6 @@ class Animation(turtle.Turtle):
 
     min_display_size = 20
     display_log_base = 1.1
-    bodies = []
 
     def __init__(self, width, height):
         super().__init__()
@@ -15,14 +14,23 @@ class Animation(turtle.Turtle):
         self.solar_system.bgcolor("black")
         
 
-    def draw(self):
-        print("Draw")
-        for body in self.bodies:
-            
-            self.dot(body.display_size)
+    def draw(self, bodies):
+        for body in bodies:
+            self.setx(10*body.position[0])
+            self.sety(10*body.position[1])
+            self.pendown()
+            self.dot(body.display_size, body.color)
+            self.penup()
 
-    def add_body(self, body):
-        self.bodies.append(body)
 
-    def remove_body(self, body):
-        self.bodies.remove(body)
+    def update(self, bodies):
+        for body in bodies:
+            body.update_position()
+        
+        self.clear()
+
+        self.draw(bodies)
+        self.solar_system.update()
+        
+        
+

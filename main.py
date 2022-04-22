@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import CelestialBodies as cb
-
+import time
 
 if __name__ == "__main__":
     
@@ -14,6 +14,9 @@ if __name__ == "__main__":
     a1 = cb.Asteroids(mass=1, radius=2, position=(-15,7,0))
     c1 = cb.Comet(mass=2, radius=4, position=(-15,-30,0))
 
+    system.draw()
+
+    
 
 '''
     init_params = np.array([r1, v1])

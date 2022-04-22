@@ -15,16 +15,21 @@ class Animation(turtle.Turtle):
         
 
     def draw(self, bodies):
-        print(bodies)
         for body in bodies:
-            self.penup()
             self.setx(10*body.position[0])
             self.sety(10*body.position[1])
             self.pendown()
             self.dot(body.display_size, body.color)
+            self.penup()
 
-    def add_body(self, body):
-        self.bodies.append(body)
 
-    def remove_body(self, body):
-        self.bodies.remove(body)
+    def update(self, bodies):
+        for body in bodies:
+            body.update_position()
+        
+        self.clear()
+
+        self.draw(bodies)
+        
+        
+

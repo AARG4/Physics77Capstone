@@ -1,4 +1,5 @@
 import numpy as np
+from pyrsistent import v
 import scipy.constants as sp
 import Animation
 import math
@@ -17,6 +18,7 @@ class CelestialBodies:
         self.radius = radius
         self.velocity = velocity
         self.position = position
+        self.delta_time = 10
         self.display_size = max(
             math.log(self.mass, self.a.display_log_base),
             self.a.min_display_size,
@@ -57,24 +59,29 @@ class CelestialBodies:
     def __str__(self) -> str:
         return self.name
 
-    def OrbitEquation(w, t, m1, m2): # w is an array containing positions and velocities
-        r1 = w[:2]
-        v1 = w[2:4]
+    def update_position(self):
         
-        r12 = np.linalg.norm(r1)
+        self.update_velocity() 
+        position_list =  [v * self.delta_time + p for v,p in zip(self.velocity, self.position)]
+        self.position = tuple(position_list)
+
+    def update_velocity(self):
         
-        dv1bydt = m2*(-r1)/r12**3  # derivative of velocity
+        acceleration_list = [f/self.mass for f in self.total_force]
 
-        dr1bydt = v1 # derivative of position 
+        velocity_list =  [a * self.delta_time + v for a,v in zip(acceleration_list, self.velocity)]
+        self.velocity = tuple(velocity_list)
         
-        r_derivs = dr1bydt
-        v_derivs = dv1bydt
-        derivs = np.concatenate((r_derivs, v_derivs)) # joining the two arrays
-        
-        return derivs
+    def update_image(self):
+        self.a.update(self.bodies)
 
-
-
+#the way the force funciton is defined isn't acceleration just a magnitude?
+#I just don't see how we specify direction
+# the acceleration is in the form of a vector so there is already a direction associated with that
+#AH i didn't understand w the way total force was defined. gotcha
+# either way, it works, look at the terminal
+#EEEEEEEEEEEE
+#is she animating
 
 ## Sun Class: Child of CelestialBodies Class
 class Sun(CelestialBodies):
@@ -86,8 +93,6 @@ class Sun(CelestialBodies):
         
         super().__init__(mass, radius, velocity, position, name, color)
         super().bodies.append(self)
-
-        print(self.color)
 
     def __str__(self) -> str:
         return self.name
@@ -121,12 +126,12 @@ class Asteroids(CelestialBodies):
     def __str__(self) -> str:
         return self.name
 
+## Comet Class: Child of CelestialBodies Class
 class Comet(CelestialBodies):
     
-    def __init__(self,ice_content = 0, mass = 0, radius = 0, velocity = (0,0,0), position = (0,0,0), name = "Comet", color="sky blue"):
+    def __init__(self, mass = 0, radius = 0, velocity = (0,0,0), position = (0,0,0), name = "Comet", color="sky blue"):
         self.name = name
-        self.ice_content = ice_content
-
+        
         super().__init__(mass, radius, velocity, position, name, color)
         super().bodies.append(self)
 
@@ -135,4 +140,5 @@ class Comet(CelestialBodies):
 
     @property
     def delta_mass(self):
-        pass
+        mass_change = 0.1 * self.delta_time #possibly also 0.37
+        return mass_change

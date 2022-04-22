@@ -16,7 +16,9 @@ if __name__ == "__main__":
 
     system.draw()
 
-    
+    while True:
+        system.update_image()
+        time.sleep(.05)
 
 '''
     init_params = np.array([r1, v1])

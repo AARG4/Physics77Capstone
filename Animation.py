@@ -30,6 +30,7 @@ class Animation(turtle.Turtle):
         self.clear()
 
         self.draw(bodies)
+        self.solar_system.update()
         
         
 

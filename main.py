@@ -33,7 +33,7 @@ if __name__ == "__main__":
     while True:
     #for _ in range(10):
         system.update_image()
-        time.sleep(.016)
+        time.sleep(.01)
         
         
         if system.end_cond():
@@ -45,3 +45,4 @@ if __name__ == "__main__":
 
 
 ### Planet Data:
+# oumuamua_jpl_dataset.txt

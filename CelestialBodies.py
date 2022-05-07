@@ -114,7 +114,6 @@ class CelestialBodies:
 
     def initialize_writer(self):
         '''initialize csv file here'''
-        print(self.mass)
 
         self.datafile = open(f"Simulation_CSVfiles_Comet/{self.name}.csv", "w")
         init_writer = csv.writer( self.datafile, delimiter = ',', quotechar = '', quoting = csv.QUOTE_NONE )

@@ -44,6 +44,12 @@ class Animation(turtle.Turtle):
             self.sety(body.position[1]*body.scaling_factor_distance)
             self.pendown()
             self.dot(body.display_size, body.color)
+
+            if body.name not in ["Mercury", "Venus", "Earth", "Mars"]:
+                self.setx((body.display_size+body.position[0])*body.scaling_factor_distance)
+                self.sety((body.display_size+body.position[1])*body.scaling_factor_distance)
+                self.write(body.name, move=False, font=('arial',20,'bold'),align='left')
+                
             self.penup()
             
             '''

@@ -45,17 +45,18 @@ class CelestialBodies:
     def total_force(self) -> tuple:
         '''Calculate the total force on self as all other objects in the system act on it (ie. planet1 and planet2 act on the sun)'''
 
-        #print("\nCalulating total force")
+        #print("\nCalculating total force")
         total = [0, 0, 0]
         for body in self.bodies:
-            if (body is not self) and (issubclass(type(body), CelestialBodies)):
+            if (body is not self) and (issubclass(type(body),\
+                CelestialBodies)):
                 force = self.force_on(body)
                 total = [t + f for t,f in zip(total, force)]
         #print("Acc.", self.name ,"Magnitude", np.sqrt(total[0]**2 + total[1]**2 + total[2]**2))
         return tuple(total)
 
     def force_on(self, other) -> tuple:
-        '''Calculate the force on self from other. Return a three dimentional tuple representing a force vector'''
+        '''Calculate the force on self from other. Return a three dimensional tuple representing a force vector'''
 
         assert issubclass(type(other), CelestialBodies)
         # F = G * m1 * m2 / (r**2)
@@ -67,12 +68,13 @@ class CelestialBodies:
         return tuple(force_list)
 
     def distance_to(self, other):
-        '''Calculates the distance between self and other. Other will be some subclass of CelestialBodies'''
+        '''Calculates the distance between self and other and returns the magnitude and unit vector for the position
+        of one with respect to the other. Other will be some subclass of CelestialBodies'''
 
         assert issubclass(type(other), CelestialBodies)
 
         dist_list = [((s - o)/1e4)**2 for s,o in zip(self.position, other.position)] #squared distances
-        dist = np.sqrt(np.sum(dist_list)) * 1e4 #distance magnitude # the 10000 and 100 are used to allow python to actually do the calculation because some numbers are too big to take the sqrt of
+        dist = np.sqrt(np.sum(dist_list)) * 1e4 #distance magnitude # the 10000 is used to allow python to actually do the calculation because some numbers are too big to take the sqrt of
         dist_vector_unit = [(s-o)/dist for s,o in zip(self.position, other.position)] 
         
         return dist, dist_vector_unit
@@ -114,7 +116,6 @@ class CelestialBodies:
 
     def initialize_writer(self):
         '''initialize csv file here'''
-        print(self.mass)
 
         self.datafile = open(f"Simulation_CSVfiles_Comet/{self.name}.csv", "w")
         init_writer = csv.writer( self.datafile, delimiter = ',', quotechar = '', quoting = csv.QUOTE_NONE )

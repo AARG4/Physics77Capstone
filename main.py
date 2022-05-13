@@ -24,16 +24,16 @@ if __name__ == "__main__":
     #planet_nine = cb.Asteroids(mass=42e25, radius=0.1, velocity=(-30.84436302295012,-1.38938157570143,0), position=(2672223048,0,29714767),name="Planet 9", color="hot pink")
 
 
-    oumuamua_asteroid = cb.Asteroids(mass=42e3, radius=0.1, velocity=(44.84436302295012,10.38938157570143,14.33792560371971), position=(144932593,73907368,-10693289),name="Oumuamua Asteroid", color="hot pink")
+    oumuamua_asteroid = cb.Asteroids(mass=42e3, radius=0.1, velocity=(44.84436302295012,10.38938157570143,14.33792560371971), position=(144932593,73907368,-10693289),name="Oumuamua", color="hot pink")
     # oumuamua_comet = cb.Comet(mass=42e3, radius=0.1, velocity=(44.84436302295012,10.38938157570143,14.33792560371971), position=(144932593,73907368,-10693289),name="Oumuamua Comet", color="hot pink")    
     # pluto = cb.Planet(mass=1.2e22, radius=1185, position=(5.91e9,0,0), velocity=(0,4.72,0), color="Red", name="Pluto")
     
     system.draw()
 
     while True:
-    #for _ in range(10):
+    #for _ in range(0):
         system.update_image()
-        time.sleep(.016)
+        time.sleep(.01)
         
         
         if system.end_cond():
@@ -45,3 +45,4 @@ if __name__ == "__main__":
 
 
 ### Planet Data:
+# oumuamua_jpl_dataset.txt
